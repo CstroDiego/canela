@@ -32,12 +32,8 @@ public class Main {
         ingrediente2.setNombre("3 Cucharadas de Agua");
         ingredientes.add(ingrediente2);
 
-        /*
-        ingrediente.setNombre("1/2 Taza de Aceite de maíz");
-        ingrediente.setNombre("2 Huevos");
-        ingrediente.setNombre("1 Paquete de Queso crema a temperatura ambiente (190 g)");
-        */
-        
+        // ...
+
         receta.setDificultad(Dificultad.INTERMEDIO);
 
     }
