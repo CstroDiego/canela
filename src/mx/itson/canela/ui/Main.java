@@ -5,6 +5,7 @@
 package mx.itson.canela.ui;
 
 import mx.itson.canela.entidades.Ingrediente;
+import mx.itson.canela.entidades.Paso;
 import mx.itson.canela.entidades.Receta;
 import mx.itson.canela.enumeradores.Dificultad;
 
@@ -33,6 +34,22 @@ public class Main {
         ingredientes.add(ingrediente2);
 
         // ...
+        //Agregar pasos
+        List<Paso> pasos = new ArrayList<>();
+        Paso paso1 = new Paso();
+        paso1.setDescripcion("Precalienta el horno a 180°C. Engrasa un molde para brownies de 20 x 20 cm.");
+        paso1.setOrden(1);
+
+        Paso paso2 = new Paso();
+        paso2.setDescripcion("En un tazón grande, mezcla la harina, la Leche Condensada LA LECHERA® y el chocolate en polvo.");
+        paso2.setOrden(2);
+
+        Paso paso3 = new Paso();
+        paso3.setDescripcion("Agrega el aceite, el agua y los huevos; bate con batidora eléctrica hasta que la mezcla esté suave y homogénea.");
+        paso3.setOrden(3);
+
+        receta.setPasos(pasos);
+
 
         receta.setDificultad(Dificultad.INTERMEDIO);
 
