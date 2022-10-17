@@ -1,0 +1,46 @@
+{
+  "nombre": "Rib Eye Marinado en Ajo con Miel",
+  "descripcion": "Preparar un RIB EYE nunca había sido tan FÁCIL y RICO, pues el secreto está en la rica combinación de JUGO MAGGI® y KIRKLAND SIGNATURE. ¡Lúcete como un experto!",
+  "numeroPorciones": 4,
+  "tiempo": 62,
+  "ingredientes": [
+    {
+      "nombre": "4 Cucharadas de Jugo MAGGI®"
+    },
+    {
+      "nombre": "4 Cucharadas de Salsa Tipo Inglesa CROSSE & BLACKWELL®"
+    },
+    {
+      "nombre": "1/4 De taza de aceite vegetal"
+    },
+    {
+      "nombre": "4 Cucharadas de Kirkland Signature® Ajo picado"
+    },
+    {
+      "nombre": "4 Cucharadas de Kirkland Signature® Miel de abeja Monofloral"
+    },
+    {
+      "nombre": "2 Rib eyes (800 g)"
+    }
+  ],
+  "pasos": [
+    {
+      "descripcion": "Mezcla el Jugo MAGGI® con la Salsa Tipo Inglesa CROSSE & BLACKWELL®, el aceite, el Kirkland Signature Ajo Picado y la Kirkland Signature Miel de Abeja.",
+      "orden": 1
+    },
+    {
+      "descripcion": "Vierte la mezcla sobre la carne, cubre con plástico adherente y refrigera por 40 minutos.",
+      "orden": 2
+    },
+    {
+      "descripcion": "En una sartén caliente asa los rib eyes hasta que estén dorados ligeramente y cocidos según el término de la carne que prefieras. Sirve y disfruta.",
+      "orden": 3
+    }
+  ],
+  "dificultad": "INTERMEDIO",
+  "usuario": {
+    "nombre": "Kirkland Signature",
+    "correoElectronico": "diego.castro@potros.itson.edu.mx",
+    "contrasena": "12345678"
+  }
+}
