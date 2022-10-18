@@ -14,9 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author diego
+ * Clase principal del proyecto.
+ *
+ * @author Diego Castro Arce
  */
 public class Main {
+    /**
+     * Método principal del proyecto.
+     *
+     * @param args Argumentos de la línea de comandos.
+     */
     public static void main(String[] args) {
         Receta receta = new Receta();
 
