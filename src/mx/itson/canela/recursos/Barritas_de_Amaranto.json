@@ -1,0 +1,60 @@
+{
+  "nombre": "Barritas de amaranto",
+  "descripcion": "¿Con antojo de algo dulce? Prepara unas crujientes BARRITAS de AMARANTO preparadas con Leche Condensada LA LECHERA® SIRVE FÁCIL. ¡Te encantarán!.",
+  "numeroPorciones": 8,
+  "tiempo": 40,
+  "ingredientes": [
+    {
+      "nombre": "1 Lata de Dulce de Leche LA LECHERA®"
+    },
+    {
+      "nombre": "1 Taza de Amaranto"
+    },
+    {
+      "nombre": "1 Taza de Avena"
+    },
+    {
+      "nombre": "1/2 Taza de Pepitas verdes sin sal"
+    },
+    {
+      "nombre": "1/2 Taza de Cacahuates sin sal"
+    },
+    {
+      "nombre": "1/2 Taza de Dátil cortados en cuartos"
+    },
+    {
+      "nombre": "1/2 Taza de Nuez picada"
+    },
+    {
+      "nombre": "1 Envase de Dulce de Leche LA LECHERA® Sirve Fácil"
+    }
+  ],
+  "pasos": [
+    {
+      "descripcion": "Horno precalentado a 180 °C.",
+      "orden": 1
+    },
+    {
+      "descripcion": "Vierte la lata de Dulce de Leche LA LECHERA® en un tazón y calienta de 3 a 4 minutos en el horno de microondas.",
+      "orden": 2
+    },
+    {
+      "descripcion": "Mezcla el amaranto con la avena, las pepitas, los cacahuates, el dátil, la nuez y el Dulce de Leche LA LECHERA® que calentaste.",
+      "orden": 3
+    },
+    {
+      "descripcion": "Agrega la mezcla anterior en una charola con papel encerado, distribuye por toda la charola y presiona ligeramente.",
+      "orden": 4
+    },
+    {
+      "descripcion": "Hornea a 180 °C de 20 a 25 minutos y deja enfriar. Decora con el Dulce de Leche LA LECHERA® Sirve Fácil formando algunas líneas. Corta en pequeños rectángulos y ofrece.",
+      "orden": 5
+    }
+  ],
+  "dificultad": "FACIL",
+  "usuario": {
+    "nombre": "Andrea Alejandra Ortiz",
+    "correoElectronico": "andrea.ortiz@gmail.com",
+    "contrasena": "12345678"
+  }
+}

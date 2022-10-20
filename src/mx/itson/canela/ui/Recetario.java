@@ -8,24 +8,67 @@ import mx.itson.canela.entidades.Ingrediente;
 import mx.itson.canela.entidades.Paso;
 import mx.itson.canela.entidades.Receta;
 
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 /**
  * Interfaz gráfica de usuario para cargar y mostrar recetas.
  *
  * @author Diego Castro Arce
  */
-public class Recetario extends javax.swing.JFrame {
+public class Recetario extends javax.swing.JDialog {
+
+    private final String contenido;
 
     /**
      * Crea una nueva instancia de la interfaz gráfica de usuario.
+     *
+     * @param parent    El padre de la interfaz gráfica de usuario.
+     * @param modal     Si la interfaz gráfica de usuario es modal.
+     * @param contenido El contenido del archivo.
      */
-    public Recetario() {
+    public Recetario(java.awt.Frame parent, boolean modal, String contenido) {
+        super(parent, modal);
+        this.contenido = contenido;
         initComponents();
+        cargarReceta();
+
+    }
+
+    /**
+     * Deserealiza el contenido del archivo y lo muestra en la interfaz gráfica de usuario.
+     */
+    public void cargarReceta() {
+        try {
+            //Convertimos el JSON a un objeto de tipo Receta
+            Receta receta = new Receta().deserealizar(contenido);
+
+            //Pasamos los atributos del objeto a los labels correspondientes
+            lblAutor.setText(receta.getUsuario().getNombre());
+            lblTitulo.setText(receta.getNombre());
+            lblDescripcion.setText(receta.getDescripcion());
+            lblDificultad.setText(receta.getDificultad().toString());
+            lblPorciones.setText(String.valueOf(receta.getNumeroPorciones()));
+            lblTiempo.setText(receta.getTiempo() + " MINUTOS");
+
+            //Pasamos la lista de ingredientes a la tabla
+            DefaultTableModel modeloIngredientes = (DefaultTableModel) tblIngredientes.getModel();
+            modeloIngredientes.setRowCount(0);
+
+            for (Ingrediente i : receta.getIngredientes()) {
+                modeloIngredientes.addRow(new Object[]{i.getNombre()});
+            }
+
+            //Pasamos la lista de pasos a la tabla
+            DefaultTableModel modeloPasos = (DefaultTableModel) tblPasos.getModel();
+            modeloPasos.setRowCount(0);
+
+            for (Paso p : receta.getPasos()) {
+                modeloPasos.addRow(new Object[]{p.getOrden(), p.getDescripcion()});
+            }
+        } catch (Exception e) {
+            System.out.println("Error en Recetario: " + e);
+
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -43,23 +86,25 @@ public class Recetario extends javax.swing.JFrame {
         tblIngredientes = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPasos = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         lblDescripcion = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblAutor = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Recetas Nestle");
         setMinimumSize(new java.awt.Dimension(1200, 620));
         setResizable(false);
 
-        lblTitulo.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        lblTitulo.setFont(new java.awt.Font("Manjari", 1, 24)); // NOI18N
         lblTitulo.setText("Titulo");
 
+        lblDifLabel.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         lblDifLabel.setText("Dificultad");
 
+        jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         jLabel4.setText("Porciones");
 
+        lblTiemLabel.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         lblTiemLabel.setText("Tiempo");
 
         lblDificultad.setText("dificultad");
@@ -68,17 +113,19 @@ public class Recetario extends javax.swing.JFrame {
 
         lblTiempo.setText("tiempo");
 
+        tblIngredientes.setAutoCreateRowSorter(true);
         tblIngredientes.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-                        {null},
-                        {null},
-                        {null},
-                        {null}
+
                 },
                 new String[]{
                         "Ingredientes"
                 }
         ));
+        tblIngredientes.setEnabled(false);
+        tblIngredientes.setMinimumSize(null);
+        tblIngredientes.setPreferredSize(null);
+        tblIngredientes.setRowSelectionAllowed(false);
         jScrollPane1.setViewportView(tblIngredientes);
 
         tblPasos.setAutoCreateRowSorter(true);
@@ -103,6 +150,8 @@ public class Recetario extends javax.swing.JFrame {
         });
         tblPasos.setEnabled(false);
         tblPasos.setFocusable(false);
+        tblPasos.setMinimumSize(null);
+        tblPasos.setName(""); // NOI18N
         tblPasos.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblPasos);
         if (tblPasos.getColumnModel().getColumnCount() > 0) {
@@ -111,70 +160,68 @@ public class Recetario extends javax.swing.JFrame {
             tblPasos.getColumnModel().getColumn(0).setMaxWidth(60);
         }
 
-        jLabel1.setText("Seleccione un archivo para cargar la receta");
-
-        btnBuscar.setText("Buscar...");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
+        jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel2.setText("¡A cocinar!");
 
+        lblDescripcion.setFont(new java.awt.Font("Manjari", 0, 14)); // NOI18N
         lblDescripcion.setText("Descripcion");
+
+        jLabel1.setText("Autor: ");
+
+        lblAutor.setText("autor");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
+                                .addGap(20, 20, 20)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(191, 191, 191)
+                                                .addGap(245, 245, 245)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(lblDifLabel)
-                                                        .addComponent(lblDificultad))
-                                                .addGap(313, 313, 313)
+                                                        .addComponent(lblDificultad)
+                                                        .addComponent(lblDifLabel))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabel4)
-                                                        .addComponent(lblPorciones, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 278, Short.MAX_VALUE)
+                                                        .addComponent(lblPorciones, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel4))
+                                                .addGap(245, 245, 245)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(lblTiempo)
-                                                        .addComponent(lblTiemLabel))
-                                                .addGap(237, 237, 237))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblTitulo)
-                                                .addGap(0, 0, Short.MAX_VALUE))
+                                                        .addComponent(lblTiemLabel)
+                                                        .addComponent(lblTiempo))
+                                                .addGap(272, 272, 272))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(jScrollPane1)
                                                         .addComponent(lblDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
+                                                .addGap(20, 20, 20))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(btnBuscar)
-                                                                        .addComponent(jLabel1)
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addGap(560, 560, 560)
-                                                                                .addComponent(jLabel2)))
-                                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                                .addContainerGap())))
+                                                                .addComponent(jLabel1)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(lblAutor))
+                                                        .addComponent(lblTitulo))
+                                                .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(562, 562, 562)
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblAutor)
+                                        .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                                 .addComponent(lblTitulo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblDescripcion)
+                                .addGap(20, 20, 20)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(lblDifLabel)
                                         .addComponent(jLabel4)
@@ -185,66 +232,17 @@ public class Recetario extends javax.swing.JFrame {
                                         .addComponent(lblPorciones)
                                         .addComponent(lblTiempo))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel2)
-                                .addGap(12, 12, 12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22))
+                                .addGap(20, 20, 20))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // Abrimos el selector de archivos
-        try {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
-            if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                //Leemos el archivo seleccionado
-                File archivo = fileChooser.getSelectedFile();
-                byte archivoBytes[] = Files.readAllBytes(archivo.toPath());
-                String contenido = new String(archivoBytes, StandardCharsets.UTF_8);
-
-                //Convertimos el JSON a un objeto de la clase Receta
-                Receta receta = new Receta().deserealizar(contenido);
-
-                //Pasamos los atributos del objeto a los labels correspondientes
-                lblTitulo.setText(receta.getNombre());
-                lblDescripcion.setText(receta.getDescripcion());
-                lblDifLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                lblDificultad.setText(receta.getDificultad().toString());
-                lblPorciones.setText(String.valueOf(receta.getNumeroPorciones()));
-                lblTiempo.setText(String.valueOf(receta.getTiempo()) + " MINUTOS");
-
-                //Pasamos la lista de ingredientes a la tabla
-                DefaultTableModel modeloIngredientes = (DefaultTableModel) tblIngredientes.getModel();
-                modeloIngredientes.setRowCount(0);
-
-                for (Ingrediente i : receta.getIngredientes()) {
-                    modeloIngredientes.addRow(new Object[]{i.getNombre()});
-                }
-
-                //Pasamos la lista de pasos a la tabla
-                DefaultTableModel modeloPasos = (DefaultTableModel) tblPasos.getModel();
-                modeloPasos.setRowCount(0);
-
-                for (Paso p : receta.getPasos()) {
-                    modeloPasos.addRow(new Object[]{p.getOrden(), p.getDescripcion()});
-                }
-
-            } else {
-                //No se seleccionó ningún archivo
-                System.out.println("No seleccionó ningún archivo");
-            }
-
-        } catch (Exception e) {
-            //Error al leer el archivo
-            System.out.println(e.getMessage());
-        }
-    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * Método principal
@@ -277,19 +275,28 @@ public class Recetario extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
-                new Recetario().setVisible(true);
+                Recetario dialog = new Recetario(new javax.swing.JFrame(), true, null);
+                dialog.addWindowListener(
+                        new java.awt.event.WindowAdapter() {
+                            @Override
+                            public void windowClosing(java.awt.event.WindowEvent e) {
+                                System.exit(0);
+                            }
+                        });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblAutor;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblDifLabel;
     private javax.swing.JLabel lblDificultad;
