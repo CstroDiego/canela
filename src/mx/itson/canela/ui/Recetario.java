@@ -7,8 +7,11 @@ package mx.itson.canela.ui;
 import mx.itson.canela.entidades.Ingrediente;
 import mx.itson.canela.entidades.Paso;
 import mx.itson.canela.entidades.Receta;
+import mx.itson.canela.enumeradores.Dificultad;
 
 import javax.swing.table.DefaultTableModel;
+
+import static java.awt.SystemColor.info;
 
 /**
  * Interfaz gráfica de usuario para cargar y mostrar recetas.
@@ -46,9 +49,16 @@ public class Recetario extends javax.swing.JDialog {
             lblAutor.setText(receta.getUsuario().getNombre());
             lblTitulo.setText(receta.getNombre());
             lblDescripcion.setText(receta.getDescripcion());
-            lblDificultad.setText(receta.getDificultad().toString());
+            //lblDificultad.setText(receta.getDificultad().toString());
             lblPorciones.setText(String.valueOf(receta.getNumeroPorciones()));
             lblTiempo.setText(receta.getTiempo() + " MINUTOS");
+            if (receta.getDificultad() == Dificultad.FACIL) {
+                lblDificultad.setText("FÁCIL");
+            } else if (receta.getDificultad() == Dificultad.INTERMEDIO) {
+                lblDificultad.setText("INTERMEDIO");
+            } else if (receta.getDificultad() == Dificultad.DESAFIANTE) {
+                lblDificultad.setText("DESAFIANTE");
+            }
 
             //Pasamos la lista de ingredientes a la tabla
             DefaultTableModel modeloIngredientes = (DefaultTableModel) tblIngredientes.getModel();
@@ -150,7 +160,6 @@ public class Recetario extends javax.swing.JDialog {
         });
         tblPasos.setEnabled(false);
         tblPasos.setFocusable(false);
-        tblPasos.setMinimumSize(null);
         tblPasos.setName(""); // NOI18N
         tblPasos.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblPasos);
